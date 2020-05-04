@@ -45,14 +45,14 @@ def decrypt(key, n, cipher):
 start = 10
 message = "Lorem ipsum is a placeholder text"
 times, n_arr = [], []
-primes = [i for i in range(10, 170) if sympy.isprime(i)]
+primes = [i for i in range(10, 200) if sympy.isprime(i)]
 
 i = 0
 while 1:
     if i > (len(primes) - 2):
         break
     n, e, d = initialize(primes[i], primes[i+1])
-    n_arr.append(n)
+    n_arr.append(len(bin(n)[2:]))
     encrypted_msg = encrypt(e, n, message)
     t1 = time.time()
     for d in range(1, n):

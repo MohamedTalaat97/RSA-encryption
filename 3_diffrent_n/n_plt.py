@@ -44,10 +44,12 @@ def decrypt(key, n, cipher):
 
 message = "Lorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder text"
 times, n_arr = [], []
-primes = [i for i in range(0, 500) if sympy.isprime(i) and i > 10]
+print(len(message))
+primes = [i for i in range(0, 100000) if sympy.isprime(i) and i > 10]
 
 i = 0
 while 1:
+    break
     if i > (len(primes) - 2):
         break
     n, e, d = initialize(primes[i], primes[i+1])
