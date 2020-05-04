@@ -39,23 +39,21 @@ def encrypt(key, n, text):
 
 def decrypt(key, n, cipher):
     text = [chr((char ** key) % n) for char in cipher]
-    print(text)
     return ''.join(text)
 
 
-message = "Lorem ipsum is a placeholder text"
+message = "Lorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder text"
 times, n_arr = [], []
-primes = [i for i in range(1, 500) if sympy.isprime(i) and i > 10]
+primes = [i for i in range(0, 500) if sympy.isprime(i) and i > 10]
 
 i = 0
 while 1:
     if i > (len(primes) - 2):
         break
     n, e, d = initialize(primes[i], primes[i+1])
-    n_arr.append(n)
+    n_arr.append(len(bin(n)[2:]))
     t1 = time.time()
     encrypted_msg = encrypt(e, n, message)
-    print(str(decrypt(d, n, encrypted_msg)))
     times.append(time.time() - t1)
     del e
     i += 2

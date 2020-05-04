@@ -45,7 +45,7 @@ def decrypt(key, n, cipher):
 start = 10
 message = "Lorem ipsum is a placeholder text"
 times, n_arr = [], []
-primes = [i for i in range(1, 180) if sympy.isprime(i) and i > 10]
+primes = [i for i in range(10, 170) if sympy.isprime(i)]
 
 i = 0
 while 1:
