@@ -46,27 +46,33 @@ message = "Lorem ipsum is a placeholder text"
 times, e_arr = [], []
 print(len(message))
 
-primes = [i for i in range(10, 150) if sympy.isprime(i)]
+primes = [i for i in range(10, 1000) if sympy.isprime(i)]
 
-p = random.choice(primes)
-q = random.choice(primes)
-n = p * q
-phi = (p-1) * (q-1)
+i = 0
+n_arr = []
 e_arr = []
+while i < len(primes) - 2:
 
-for i in range(2, phi):
-    if co_prime(i, phi):
-        e_arr.append(i)
+    p = primes[i]
+    q = primes[i+1]
+    print(p, q)
+    n = p * q
+    phi = (p-1) * (q-1)
+    n_arr.append(n)
+    for k in range(2, phi):
+        if co_prime(k, phi):
+            e_arr.append(k)
 
+    e = e_arr[-1]
 
-for e in e_arr:
     t1 = time.time()
     encrypted_msg = encrypt(e, n, message)
-    times.append(time.time() - t1)
+    times.append((time.time() - t1)*1000)
+    i += 2
 
 
-plt.plot(e_arr, times)
-plt.xlabel('e')
-plt.ylabel('time')
+plt.plot(times[::int(len(times)/50)], n_arr[::int(len(n_arr)/50)])
+plt.xlabel('time in milliseconds')
+plt.ylabel('n')
 plt.title('plot')
 plt.show()

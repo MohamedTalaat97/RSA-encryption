@@ -12,6 +12,20 @@ def co_prime(x, y):
     return False
 
 
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+
 def inverseMod(x, y):
     for k in range(1, y):
         if (y*k + 1) % x == 0:
@@ -45,28 +59,36 @@ def decrypt(key, n, cipher):
 start = 10
 message = "Lorem ipsum is a placeholder text"
 times, n_arr = [], []
-primes = [i for i in range(10, 200) if sympy.isprime(i)]
+primes = [i for i in range(10, 90000) if sympy.isprime(i)]
 
 i = 0
 while 1:
     if i > (len(primes) - 2):
         break
-    n, e, d = initialize(primes[i], primes[i+1])
-    n_arr.append(len(bin(n)[2:]))
+
+    n, e, d_original = initialize(primes[i], primes[i+1])
+    n_arr.append(n)
     encrypted_msg = encrypt(e, n, message)
+    # attack##########################################
     t1 = time.time()
-    for d in range(1, n):
-        decrypted = str(decrypt(d, n, encrypted_msg))
-        if decrypted == message:
-            print("d found", d)
-            break
-    times.append(time.time() - t1)
+    prime_factors_n = prime_factors(n)
+    prime_factors_n = [x for x in prime_factors_n if x < n**2 and x != 1]
+    print(prime_factors_n)
+    n, e, d = initialize(prime_factors_n[0], prime_factors_n[1])
+    '''
+    decrypted = str(decrypt(d, n, encrypted_msg))
+    if decrypted == message:
+        print("attack successful")
+    else:
+        print("attack un ")
+    '''
+    times.append((time.time() - t1)*1000)
     del e
     i += 2
 
 
-plt.plot(n_arr, times)
-plt.xlabel('n')
-plt.ylabel('time')
+plt.plot(times[::int(len(times)/5)], n_arr[::int(len(n_arr)/5)])
+plt.xlabel('time in milliseconds')
+plt.ylabel('n')
 plt.title('plot')
 plt.show()

@@ -5,6 +5,20 @@ import os
 import time
 
 
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+
 def co_prime(x, y):
     if (math.gcd(x, y) == 1):
         return True
@@ -32,13 +46,6 @@ def initialize():
             break
 
     d = inverseMod(e, phi)
-
-    public_file = os.path.join(dirname, 'public.txt')
-    f = open(public_file, "w")
-    f.writelines(str(e)+'\n')
-    f.writelines(str(n)+'\n')
-    f.close()
-
     return (n, e, d)
 
 
@@ -57,10 +64,7 @@ message = "Lorem Ipsum is simply dummy text"
 n, e, d_origianl = initialize()
 encrypted_msg = encrypt(e, n, message)
 
-
-for d in range(1, n):
-    decrypted = str(decrypt(d, n, encrypted_msg))
-    if decrypted == message:
-        print("d found", d)
-        print(decrypted)
-        break
+prime_factors_n = prime_factors(n)
+prime_factors_n = [x for x in prime_factors_n if x < n**2 and x != 1]
+print(prime_factors_n)
+n, e, d = initialize(prime_factors_n[0], prime_factors_n[1])
