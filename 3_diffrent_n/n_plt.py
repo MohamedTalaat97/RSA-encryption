@@ -42,27 +42,31 @@ def decrypt(key, n, cipher):
     return ''.join(text)
 
 
-message = "Lorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder textLorem ipsum is a placeholder text"
-times, n_arr = [], []
+message = "Lorem ipsum is a placeholder text"
+times, e_arr = [], []
 print(len(message))
-primes = [i for i in range(0, 100000) if sympy.isprime(i) and i > 10]
 
-i = 0
-while 1:
-    break
-    if i > (len(primes) - 2):
-        break
-    n, e, d = initialize(primes[i], primes[i+1])
-    n_arr.append(len(bin(n)[2:]))
+primes = [i for i in range(10, 150) if sympy.isprime(i)]
+
+p = random.choice(primes)
+q = random.choice(primes)
+n = p * q
+phi = (p-1) * (q-1)
+e_arr = []
+
+for i in range(2, phi):
+    if co_prime(i, phi):
+        e_arr.append(i)
+
+
+for e in e_arr:
     t1 = time.time()
     encrypted_msg = encrypt(e, n, message)
     times.append(time.time() - t1)
-    del e
-    i += 2
 
 
-plt.plot(n_arr, times)
-plt.xlabel('n')
+plt.plot(e_arr, times)
+plt.xlabel('e')
 plt.ylabel('time')
 plt.title('plot')
 plt.show()
